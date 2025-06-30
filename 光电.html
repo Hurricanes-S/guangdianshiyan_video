@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多视频播放器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- 视频播放器 1 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+            <div class="relative aspect-video bg-black text-white flex items-center justify-center">
+                <!-- 视频元素 -->
+                <video id="video-1" class="w-full h-full object-contain absolute inset-0 z-0" controls muted>
+                    <source src="https://res.cloudinary.com/dckptfu6z/video/upload/2-1_shol5i.mp4?_s=vp-2.5.0" type="video/mp4">
+                    您的浏览器不支持HTML5视频播放。
+                </video>
+
+                <!-- 自定义提示文字 -->
+                <div id="overlay-1" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
+                     onclick="playVideo('video-1', 'overlay-1')">
+                    <p class="text-xl font-semibold text-white text-center px-4">
+                        点击播放视频<br><span class="text-sm font-normal">小海龟仿真实验结果</span>
+                    </p>
+                </div>
+            </div>
+            <!-- 说明文字 -->
+            <p class="text-center text-lg font-semibold text-blue-600 py-3">第一个例程——小海龟仿真实验结果</p>
+        </div>
+
+        <!-- 视频播放器 2 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg mt-6">
+            <div class="relative aspect-video bg-black text-white flex items-center justify-center">
+                <!-- 视频元素 -->
+                <video id="video-2" class="w-full h-full object-contain absolute inset-0 z-0" controls muted>
+                    <source src="https://res.cloudinary.com/dckptfu6z/video/upload/2-2_gpkkbz.mp4?_s=vp-2.5.0" type="video/mp4">
+                    您的浏览器不支持HTML5视频播放。
+                </video>
+
+                <!-- 自定义提示文字 -->
+                <div id="overlay-2" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
+                     onclick="playVideo('video-2', 'overlay-2')">
+                    <p class="text-xl font-semibold text-white text-center px-4">
+                        点击播放视频<br><span class="text-sm font-normal">Turtlebot3转向</span>
+                    </p>
+                </div>
+            </div>
+            <!-- 说明文字 -->
+            <p class="text-center text-lg font-semibold text-blue-600 py-3">Turtlebot3转向</p>
+        </div>
+
+        <!-- 视频播放器 3 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg mt-6">
+            <div class="relative aspect-video bg-black text-white flex items-center justify-center">
+                <!-- 视频元素 -->
+                <video id="video-3" class="w-full h-full object-contain absolute inset-0 z-0" controls muted>
+                    <source src="https://res.cloudinary.com/dckptfu6z/video/upload/2-3_ddvzb9.mp4?_s=vp-2.5.0" type="video/mp4">
+                    您的浏览器不支持HTML5视频播放。
+                </video>
+
+                <!-- 自定义提示文字 -->
+                <div id="overlay-3" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
+                     onclick="playVideo('video-3', 'overlay-3')">
+                    <p class="text-xl font-semibold text-white text-center px-4">
+                        点击播放视频<br><span class="text-sm font-normal">Turtlebot3直行</span>
+                    </p>
+                </div>
+            </div>
+            <!-- 说明文字 -->
+            <p class="text-center text-lg font-semibold text-blue-600 py-3">Turtlebot3转向直行</p>
+        </div>
+    </div>
+
+    <!-- 控制脚本 -->
+    <script>
+        function playVideo(videoId, overlayId) {
+            const video = document.getElementById(videoId);
+            const overlay = document.getElementById(overlayId);
+
+            // 隐藏提示层
+            overlay.style.display = 'none';
+
+            // 设置静音（确保兼容）
+            video.muted = true;
+
+            // 播放视频
+            video.play();
+        }
+    </script>
+</body>
+</html>

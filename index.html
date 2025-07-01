@@ -6,11 +6,63 @@
     <title>多视频播放器</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .video-overlay {
+                transition: all 0.3s ease;
+            }
+            .video-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .video-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen font-sans">
-    <div class="container mx-auto px-4 py-8 max-w-6xl">
+<body class="bg-gray-50 min-h-screen font-sans">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-3xl font-bold text-primary text-center">机器人技术演示视频</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- 视频控制栏 -->
+        <div class="bg-white rounded-lg shadow-md p-4 mb-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <p class="text-gray-700 font-medium">当前播放: <span id="current-playing" class="text-primary font-bold">无</span></p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="pause-all" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center">
+                    <i class="fa fa-pause mr-2"></i> 暂停所有视频
+                </button>
+                <button id="mute-toggle" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center">
+                    <i class="fa fa-volume-off mr-2"></i> 静音切换
+                </button>
+            </div>
+        </div>
+
         <!-- 视频播放器 1 -->
-        <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+        <div class="video-card bg-white rounded-xl overflow-hidden shadow-lg mb-6">
             <div class="relative aspect-video bg-black text-white flex items-center justify-center">
                 <!-- 视频元素 -->
                 <video id="video-1" class="w-full h-full object-contain absolute inset-0 z-0" controls muted>
@@ -19,19 +71,24 @@
                 </video>
 
                 <!-- 自定义提示文字 -->
-                <div id="overlay-1" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
-                     onclick="playVideo('video-1', 'overlay-1')">
-                    <p class="text-xl font-semibold text-white text-center px-4">
-                        点击播放视频<br><span class="text-sm font-normal">小海龟仿真实验结果</span>
-                    </p>
+                <div id="overlay-1" class="video-overlay absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
+                     onclick="playVideo('video-1', 'overlay-1', '第一个例程——小海龟仿真实验结果')">
+                    <div class="text-center text-white p-4">
+                        <i class="fa fa-play-circle text-4xl mb-2 text-white"></i>
+                        <p class="text-xl font-semibold">点击播放视频</p>
+                        <p class="text-sm">小海龟仿真实验结果</p>
+                    </div>
                 </div>
             </div>
             <!-- 说明文字 -->
-            <p class="text-center text-lg font-semibold text-blue-600 py-3">第一个例程——小海龟仿真实验结果</p>
+            <div class="p-4 bg-gray-50">
+                <p class="text-center text-lg font-semibold text-primary">第一个例程——小海龟仿真实验结果</p>
+                <p class="text-gray-600 mt-2 text-sm text-center">这是小海龟机器人的基础仿真实验结果演示</p>
+            </div>
         </div>
 
         <!-- 视频播放器 2 -->
-        <div class="bg-white rounded-xl overflow-hidden shadow-lg mt-6">
+        <div class="video-card bg-white rounded-xl overflow-hidden shadow-lg mb-6">
             <div class="relative aspect-video bg-black text-white flex items-center justify-center">
                 <!-- 视频元素 -->
                 <video id="video-2" class="w-full h-full object-contain absolute inset-0 z-0" controls muted>
@@ -40,19 +97,24 @@
                 </video>
 
                 <!-- 自定义提示文字 -->
-                <div id="overlay-2" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
-                     onclick="playVideo('video-2', 'overlay-2')">
-                    <p class="text-xl font-semibold text-white text-center px-4">
-                        点击播放视频<br><span class="text-sm font-normal">Turtlebot3转向</span>
-                    </p>
+                <div id="overlay-2" class="video-overlay absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
+                     onclick="playVideo('video-2', 'overlay-2', 'Turtlebot3转向')">
+                    <div class="text-center text-white p-4">
+                        <i class="fa fa-play-circle text-4xl mb-2 text-white"></i>
+                        <p class="text-xl font-semibold">点击播放视频</p>
+                        <p class="text-sm">Turtlebot3转向</p>
+                    </div>
                 </div>
             </div>
             <!-- 说明文字 -->
-            <p class="text-center text-lg font-semibold text-blue-600 py-3">Turtlebot3转向</p>
+            <div class="p-4 bg-gray-50">
+                <p class="text-center text-lg font-semibold text-primary">Turtlebot3转向</p>
+                <p class="text-gray-600 mt-2 text-sm text-center">展示Turtlebot3机器人的转向控制功能</p>
+            </div>
         </div>
 
         <!-- 视频播放器 3 -->
-        <div class="bg-white rounded-xl overflow-hidden shadow-lg mt-6">
+        <div class="video-card bg-white rounded-xl overflow-hidden shadow-lg mb-6">
             <div class="relative aspect-video bg-black text-white flex items-center justify-center">
                 <!-- 视频元素 -->
                 <video id="video-3" class="w-full h-full object-contain absolute inset-0 z-0" controls muted>
@@ -61,18 +123,24 @@
                 </video>
 
                 <!-- 自定义提示文字 -->
-                <div id="overlay-3" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
-                     onclick="playVideo('video-3', 'overlay-3')">
-                    <p class="text-xl font-semibold text-white text-center px-4">
-                        点击播放视频<br><span class="text-sm font-normal">Turtlebot3直行</span>
-                    </p>
+                <div id="overlay-3" class="video-overlay absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
+                     onclick="playVideo('video-3', 'overlay-3', 'Turtlebot3直行')">
+                    <div class="text-center text-white p-4">
+                        <i class="fa fa-play-circle text-4xl mb-2 text-white"></i>
+                        <p class="text-xl font-semibold">点击播放视频</p>
+                        <p class="text-sm">Turtlebot3直行</p>
+                    </div>
                 </div>
             </div>
             <!-- 说明文字 -->
-            <p class="text-center text-lg font-semibold text-blue-600 py-3">Turtlebot3转向直行</p>
+            <div class="p-4 bg-gray-50">
+                <p class="text-center text-lg font-semibold text-primary">Turtlebot3直行</p>
+                <p class="text-gray-600 mt-2 text-sm text-center">展示Turtlebot3机器人的直行控制功能</p>
+            </div>
         </div>
-      <!-- 视频播放器 4 -->
-        <div class="bg-white rounded-xl overflow-hidden shadow-lg mt-6">
+
+        <!-- 视频播放器 4 -->
+        <div class="video-card bg-white rounded-xl overflow-hidden shadow-lg mb-6">
             <div class="relative aspect-video bg-black text-white flex items-center justify-center">
                 <!-- 视频元素 -->
                 <video id="video-4" class="w-full h-full object-contain absolute inset-0 z-0" controls muted>
@@ -81,32 +149,123 @@
                 </video>
 
                 <!-- 自定义提示文字 -->
-                <div id="overlay-4" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
-                     onclick="playVideo('video-4', 'overlay-4')">
-                    <p class="text-xl font-semibold text-white text-center px-4">
-                        点击播放视频<br><span class="text-sm font-normal">turtlebot3移动并通过激光雷达建图</span>
-                    </p>
+                <div id="overlay-4" class="video-overlay absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 cursor-pointer"
+                     onclick="playVideo('video-4', 'overlay-4', 'turtlebot3移动并通过激光雷达建图')">
+                    <div class="text-center text-white p-4">
+                        <i class="fa fa-play-circle text-4xl mb-2 text-white"></i>
+                        <p class="text-xl font-semibold">点击播放视频</p>
+                        <p class="text-sm">turtlebot3移动并通过激光雷达建图</p>
+                    </div>
                 </div>
             </div>
             <!-- 说明文字 -->
-            <p class="text-center text-lg font-semibold text-blue-600 py-3">turtlebot3移动并通过激光雷达建图</p>
+            <div class="p-4 bg-gray-50">
+                <p class="text-center text-lg font-semibold text-primary">turtlebot3移动并通过激光雷达建图</p>
+                <p class="text-gray-600 mt-2 text-sm text-center">展示Turtlebot3机器人移动同时通过激光雷达进行环境建图</p>
+            </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>机器人技术演示视频 &copy; 2025</p>
+            <p class="text-sm text-gray-400 mt-2">用于展示机器人控制与建图技术的演示平台</p>
+        </div>
+    </footer>
+
     <!-- 控制脚本 -->
     <script>
-        function playVideo(videoId, overlayId) {
+        // 当前播放的视频ID
+        let currentlyPlaying = null;
+        
+        function playVideo(videoId, overlayId, videoTitle) {
             const video = document.getElementById(videoId);
             const overlay = document.getElementById(overlayId);
-
+            
+            // 如果有其他视频在播放，先暂停
+            if (currentlyPlaying && currentlyPlaying !== videoId) {
+                const prevVideo = document.getElementById(currentlyPlaying);
+                const prevOverlay = document.getElementById(`overlay-${currentlyPlaying.split('-')[1]}`);
+                
+                if (prevVideo) {
+                    prevVideo.pause();
+                    if (prevOverlay) {
+                        prevOverlay.style.display = 'flex';
+                    }
+                }
+            }
+            
             // 隐藏提示层
             overlay.style.display = 'none';
-
-            // 设置静音（确保兼容）
-            video.muted = true;
-
+            
             // 播放视频
-            video.play();
+            video.play().catch(err => {
+                console.log("视频播放错误:", err);
+                alert("视频播放失败，请检查您的网络连接");
+            });
+            
+            // 更新当前播放状态
+            currentlyPlaying = videoId;
+            document.getElementById("current-playing").textContent = videoTitle;
         }
+        
+        // 暂停所有视频
+        document.getElementById("pause-all").addEventListener("click", function() {
+            if (currentlyPlaying) {
+                const video = document.getElementById(currentlyPlaying);
+                const overlay = document.getElementById(`overlay-${currentlyPlaying.split('-')[1]}`);
+                
+                if (video) {
+                    video.pause();
+                    if (overlay) {
+                        overlay.style.display = 'flex';
+                    }
+                }
+                
+                currentlyPlaying = null;
+                document.getElementById("current-playing").textContent = "无";
+            }
+        });
+        
+        // 静音切换
+        document.getElementById("mute-toggle").addEventListener("click", function() {
+            const muteIcon = this.querySelector("i");
+            const videos = document.querySelectorAll("video");
+            let allMuted = true;
+            
+            videos.forEach(video => {
+                video.muted = !video.muted;
+                if (!video.muted) {
+                    allMuted = false;
+                }
+            });
+            
+            if (allMuted) {
+                muteIcon.classList.remove("fa-volume-up");
+                muteIcon.classList.add("fa-volume-off");
+            } else {
+                muteIcon.classList.remove("fa-volume-off");
+                muteIcon.classList.add("fa-volume-up");
+            }
+        });
+        
+        // 视频结束时重置状态
+        document.querySelectorAll("video").forEach(video => {
+            video.addEventListener("ended", function() {
+                const videoId = this.id;
+                const overlayId = `overlay-${videoId.split('-')[1]}`;
+                const overlay = document.getElementById(overlayId);
+                
+                if (overlay) {
+                    overlay.style.display = 'flex';
+                }
+                
+                if (currentlyPlaying === videoId) {
+                    currentlyPlaying = null;
+                    document.getElementById("current-playing").textContent = "无";
+                }
+            });
+        });
     </script>
 </body>
 </html>
